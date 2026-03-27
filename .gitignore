@@ -1,0 +1,16 @@
+# Compiled output
+out/
+*.class
+
+# Exclude first trial database
+/src/main/java/database/InMemoryStore.java
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
