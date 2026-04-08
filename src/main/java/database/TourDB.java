@@ -48,11 +48,6 @@ public class TourDB {
 
     public static void main(String[] args)
             throws Exception {
-        TourDB tourDB = new TourDB();
-        ArrayList<Tour> results = new ArrayList<Tour>(tourDB.select("Nothern"))
-        for(Tour tour : results){
-            System.out.println(tour.getTourName())
-        }
 
     }
 
