@@ -24,24 +24,29 @@ public class TourDB {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Tour tour = new Tour();
-                tour.setID(rs.getString("id"));
+                tour.setId(rs.getInt("id"));
                 tour.setTourName(rs.getString("name"));
-                tour.setType(rs.getString("type"));
+                tour.setTourType(rs.getString("type"));
                 tour.setDate(rs.getDate("day"));
-                tour.setStartTime(rs.getTime("startTime"));
-                tour.setDuration(rs.getInt("duration"));
+                tour.setStartTime(rs.getString("startTime"));
+                tour.setLength(rs.getInt("duration"));
                 tour.setRegion(rs.getString("region"));
-                tour.setStartLocation(rs.getString("leavesFrom"));
+                // tour.setStartLocation(rs.getString("leavesFrom"));
                 tour.setPrice(rs.getInt("price"));
                 tour.setImgUrl(rs.getString("imgUrl"));
                 tour.setCapacity(rs.getInt("capacity"));
-                tour.setMinTravelers(rs.getInt("minNrTravelers"));
-                tour.setNrBookings(rs.getInt("nrBookings"));
+                // tour.setMinTravelers(rs.getInt("minNrTravelers"));
+                tour.setNrTravelersBooked(rs.getInt("nrBookings"));
                 tour.setIsFull(rs.getBoolean("full"));
                 tour.setIsCancelled(rs.getBoolean("cancelled"));
                 results.add(tour);
 
             }
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+
         }
 
     }
