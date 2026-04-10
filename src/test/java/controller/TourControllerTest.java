@@ -2,6 +2,7 @@ package controller;
 
 import model.Tour;
 import database.StorageMock;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,14 @@ class TourControllerTest {
     @BeforeEach
     void setUp() {
         controller = new controller.TourController(new StorageMock());
+    }
+
+    /**
+     * Tear down method that runs after each test. Sets controller to null.
+     */
+    @AfterEach
+    void tearDown() {
+        controller = null;
     }
 
     // SEARCH TESTS
@@ -53,7 +62,7 @@ class TourControllerTest {
     }
 
     /**
-     * Test that search is case-insensitive.
+     * Test that search is accent-insensitive.
      */
     @Test
     @DisplayName("Search is accent-insensitive")
@@ -82,5 +91,4 @@ class TourControllerTest {
         List<Tour> results = controller.search("Boat");
         assertEquals(2, results.size());
     }
-
 }

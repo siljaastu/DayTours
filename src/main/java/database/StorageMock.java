@@ -46,7 +46,7 @@ public class StorageMock implements database.TourStorageInterface {
     public List<Tour> getToursByKeyword(String keyword) {
         List<Tour> results = new ArrayList<>();
         for (Tour tour : tours) {
-            if (tour.getTourName().toLowerCase().contains(keyword.toLowerCase())) {
+            if (tour.getTourName().contains(keyword)) {
                 results.add(tour);
             }
         }
