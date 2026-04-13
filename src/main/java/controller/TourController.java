@@ -18,7 +18,7 @@ public class TourController {
 
     private final database.TourStorageInterface store;
 
-    //def constructor
+    // def constructor
     public TourController() {
         this.store = new database.StorageMock();
     }
@@ -27,10 +27,13 @@ public class TourController {
         this.store = store;
     }
 
-    // SEARCH
+    // SEARCH.
     // Needs some tweaking, depends on how we do highlights f.ex.
+    // Ætti þetta ekki bara að kalla á search aðferðina í TourDB og vinna svo úr
+    // þeim gögnum?
     public List<Tour> search(String query) {
-        if (query == null || query.trim().isEmpty()) return Collections.emptyList();
+        if (query == null || query.trim().isEmpty())
+            return Collections.emptyList();
         String q = normalize(query.toLowerCase());
 
         return store.listTours().stream()
@@ -43,7 +46,8 @@ public class TourController {
     // for special characters, already implemented in Search
     // Could also be used for region etc.
     public static String normalize(String input) {
-        if (input == null) return "";
+        if (input == null)
+            return "";
 
         String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
         return normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "").toLowerCase();
@@ -53,7 +57,8 @@ public class TourController {
     // works better as a list you choose from
     // i'll leave it as is until we start working with the real db
     public List<Tour> filterByRegion(String region) {
-        if (region == null) return Collections.emptyList();
+        if (region == null)
+            return Collections.emptyList();
 
         return store.listTours().stream()
                 .filter(t -> t.getRegion() != null &&
@@ -62,7 +67,8 @@ public class TourController {
     }
 
     public List<Tour> filterByDate(Date date) {
-        if (date == null) return Collections.emptyList();
+        if (date == null)
+            return Collections.emptyList();
 
         return store.listTours().stream()
                 .filter(t -> t.getDate() != null && sameDay(t.getDate(), date))
@@ -70,8 +76,10 @@ public class TourController {
     }
 
     private boolean sameDay(Date a, Date b) {
-        Calendar ca = Calendar.getInstance(); ca.setTime(a);
-        Calendar cb = Calendar.getInstance(); cb.setTime(b);
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(a);
+        Calendar cb = Calendar.getInstance();
+        cb.setTime(b);
 
         return ca.get(Calendar.YEAR) == cb.get(Calendar.YEAR)
                 && ca.get(Calendar.DAY_OF_YEAR) == cb.get(Calendar.DAY_OF_YEAR);
@@ -81,21 +89,27 @@ public class TourController {
     // rather than certain time in the day (þeas tími dags > tímasetning)
     // Maybe something like this
     public List<Tour> filterByTimeOfDay(String timeOfDay) {
-        if (timeOfDay == null) return Collections.emptyList();
+        if (timeOfDay == null)
+            return Collections.emptyList();
 
         return store.listTours().stream()
                 .filter(t -> {
                     String st = t.getStartTime();
-                    if (st == null) return false;
+                    if (st == null)
+                        return false;
 
                     try {
                         int hour = Integer.parseInt(st.split(":")[0]);
 
                         switch (timeOfDay.toLowerCase()) {
-                            case "morning": return hour < 12;
-                            case "afternoon": return hour >= 12 && hour < 18;
-                            case "evening": return hour >= 18;
-                            default: return false;
+                            case "morning":
+                                return hour < 12;
+                            case "afternoon":
+                                return hour >= 12 && hour < 18;
+                            case "evening":
+                                return hour >= 18;
+                            default:
+                                return false;
                         }
                     } catch (Exception e) {
                         return false;
@@ -110,7 +124,8 @@ public class TourController {
     }
 
     public List<Tour> filterByType(String type) {
-        if (type == null) return Collections.emptyList();
+        if (type == null)
+            return Collections.emptyList();
 
         return store.listTours().stream()
                 .filter(t -> t.getTourType() != null &&
@@ -128,7 +143,8 @@ public class TourController {
     // might be more safe to use tourid instead of equals (which compares objects),
     // not sure if we'd be making more instances of the same tours?
     public List<Tour> showSimilarTours(Tour tour) {
-        if (tour == null) return Collections.emptyList();
+        if (tour == null)
+            return Collections.emptyList();
 
         return store.listTours().stream()
                 .filter(t -> !t.equals(tour) &&
@@ -144,7 +160,8 @@ public class TourController {
     // Haven't done many functions with bookings
     // was a bit back and forth again with the manager dilemma we had
     public Booking book(long tourId, long travelerId, int tickets) {
-        if (tickets <= 0) throw new IllegalArgumentException("tickets must be > 0");
+        if (tickets <= 0)
+            throw new IllegalArgumentException("tickets must be > 0");
 
         Tour tour = store.findTourById(tourId)
                 .orElseThrow(() -> new IllegalArgumentException("tour not found"));
@@ -173,17 +190,3 @@ public class TourController {
         return store.listTravelers();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
