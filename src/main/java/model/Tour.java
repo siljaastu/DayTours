@@ -8,7 +8,7 @@ import java.util.List;
  * Tour model.
  */
 public class Tour {
-    private long id; // added (not in our design model)
+    private String id; // added (not in our design model)
     private String tourName;
     private String tourType;
     private Date date;
@@ -37,7 +37,7 @@ public class Tour {
     }
 
     // Constructor that accepts an id for calls like new Tour(0, "Name", "Type")
-    public Tour(long id, String tourName, String tourType) {
+    public Tour(String id, String tourName, String tourType) {
         this.id = id;
         this.tourName = tourName;
         this.tourType = tourType;
@@ -45,7 +45,7 @@ public class Tour {
     }
 
     // constructor for some fields
-    public Tour(long id, String name, String type, String region,
+    public Tour(String id, String name, String type, String region,
             int price, int length, String startTime, int capacity) {
         this.id = id;
         this.tourName = name;
@@ -59,7 +59,7 @@ public class Tour {
     }
 
     // constructor for all fields
-    public Tour(Long id, String tourName, String tourType, Date date, String region, String startTime,
+    public Tour(String id, String tourName, String tourType, Date date, String region, String startTime,
             int length, int price, String imgUrl, int capacity, int minNrTravelers, int nrTravelersBooked,
             boolean isFull, boolean isCancelled) {
         this.id = id;
@@ -82,7 +82,7 @@ public class Tour {
 
     // create Tour only with id, name and type
     // sets default values for price, region length, start-time and capacity
-    private Tour createTour(long id, String name, String type) {
+    private Tour createTour(String id, String name, String type) {
         Tour t = new Tour(id, name, type);
         t.setPrice(10000);
         t.setRegion("Unknown");
@@ -93,11 +93,11 @@ public class Tour {
     }
 
     // getters and setters - some probably redundant
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

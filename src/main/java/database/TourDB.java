@@ -15,6 +15,35 @@ public class TourDB {
     }
 
     /**
+     * Helper function to make Tour objects.
+     * 
+     * @param rs the line from the SQL query
+     * @return Tour object.
+     * @throws SQLException
+     */
+    private Tour mapResultSetToTour(ResultSet rs) throws SQLException {
+        Tour tour = new Tour();
+        tour.setId(rs.getString("id"));
+        tour.setTourName(rs.getString("name"));
+        tour.setTourType(rs.getString("type"));
+        String dateString = rs.getString("day");
+        if (dateString != null) {
+            tour.setDate(java.sql.Date.valueOf(dateString));
+        }
+        tour.setStartTime(rs.getString("startTime"));
+        tour.setLength(rs.getInt("duration"));
+        tour.setRegion(rs.getString("region"));
+        tour.setPrice(rs.getInt("price"));
+        tour.setImgUrl(rs.getString("imgUrl"));
+        tour.setCapacity(rs.getInt("capacity"));
+        tour.setNrTravelersBooked(rs.getInt("nrBookings"));
+        tour.setIsFull(rs.getBoolean("full"));
+        tour.setIsCancelled(rs.getBoolean("cancelled"));
+
+        return tour;
+    }
+
+    /**
      * Looks up tours in DB based on a keyword and returns all
      * tours that have that keyword in the title.
      *
@@ -32,23 +61,7 @@ public class TourDB {
             pstmt.setString(1, "%" + keyword + "%");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Tour tour = new Tour();
-                tour.setId(rs.getInt("id"));
-                tour.setTourName(rs.getString("name"));
-                tour.setTourType(rs.getString("type"));
-                tour.setDate(rs.getDate("day"));
-                tour.setStartTime(rs.getString("startTime"));
-                tour.setLength(rs.getInt("duration"));
-                tour.setRegion(rs.getString("region"));
-                // tour.setStartLocation(rs.getString("leavesFrom"));
-                tour.setPrice(rs.getInt("price"));
-                tour.setImgUrl(rs.getString("imgUrl"));
-                tour.setCapacity(rs.getInt("capacity"));
-                // tour.setMinTravelers(rs.getInt("minNrTravelers"));
-                tour.setNrTravelersBooked(rs.getInt("nrBookings"));
-                tour.setIsFull(rs.getBoolean("full"));
-                tour.setIsCancelled(rs.getBoolean("cancelled"));
-                results.add(tour);
+                results.add(mapResultSetToTour(rs));
 
             }
             return results;
@@ -62,14 +75,29 @@ public class TourDB {
 
     public ArrayList<Tour> filterByRegion(String region) {
         ArrayList<Tour> results = new ArrayList<>();
-        return results;
+        String query = "SELECT * FROM tours WHERE region = ?";
+
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, region);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                results.add(mapResultSetToTour(rs));
+            }
+
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+
+        }
     }
 
     public static void main(String[] args)
             throws Exception {
 
         TourDB prufa = new TourDB();
-        ArrayList<Tour> tours = new ArrayList<>(prufa.search("northern"));
+        ArrayList<Tour> tours = new ArrayList<>(prufa.search("reykjavík"));
         for (Tour tour : tours) {
             System.out.println(tour.getTourName() + " " + tour.getTourType() + " " + tour.getPrice());
         }
