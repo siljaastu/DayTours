@@ -64,13 +64,10 @@ public class TourDB {
                 results.add(mapResultSetToTour(rs));
 
             }
-            return results;
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<>();
-
         }
-
+        return results;
     }
 
     public ArrayList<Tour> filterByRegion(String region) {
@@ -84,23 +81,51 @@ public class TourDB {
             while (rs.next()) {
                 results.add(mapResultSetToTour(rs));
             }
-
-            return results;
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<>();
 
         }
+        return results;
+    }
+
+    public ArrayList<Tour> filterByType(String type) {
+        ArrayList<Tour> results = new ArrayList<>();
+        String query = "SELECT * FROM tours WHERE type = ?";
+
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, type);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                results.add(mapResultSetToTour(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return results;
+    }
+
+    public ArrayList<Tour> filterByDate(String date) {
+        ArrayList<Tour> results = new ArrayList<>();
+        String query = "SELECT * FROM tours WHERE day = ?";
+
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, date);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                results.add(mapResultSetToTour(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
     }
 
     public static void main(String[] args)
             throws Exception {
-
-        TourDB prufa = new TourDB();
-        ArrayList<Tour> tours = new ArrayList<>(prufa.search("reykjavík"));
-        for (Tour tour : tours) {
-            System.out.println(tour.getTourName() + " " + tour.getTourType() + " " + tour.getPrice());
-        }
 
     }
 
