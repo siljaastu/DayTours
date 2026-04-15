@@ -9,29 +9,60 @@ import java.util.Set;
  * Traveler model. Traveler info and maybe favorites?
  */
 public class Traveler {
-    private long id;
+    private int id;
     private String name;
     private String email;
+    private String phoneNR;
     private Set<Long> favorites = new HashSet<>(); // to avoid duplicates
-    public Traveler() {}
 
-    public Traveler(long id, String name, String email) {
+    public Traveler() {
+    }
+
+    public Traveler(int id, String name, String phoneNR, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
     }
 
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getName() {
+        return name;
+    }
 
-    public Set<Long> getFavorites() { return favorites; }
-    public void setFavorites(Set<Long> favorites) { this.favorites = favorites; }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNr() {
+        return phoneNR;
+    }
+
+    public void setPhoneNr(String phoneNr) {
+        this.phoneNR = phoneNr;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Long> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(Set<Long> favorites) {
+        this.favorites = favorites;
+    }
 
     /**
      * Moved this from Tour (in design model)

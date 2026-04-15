@@ -6,39 +6,70 @@ import java.util.Date;
  * Booking model.
  */
 public class Booking {
-    private long id;
-    private long tourId;
-    private long travelerId;
+    private int id;
+    private String tourId;
+    private int travelerId;
     private int tickets;
     private String status = "CONFIRMED"; // CONFIRMED / CANCELLED
     private Date createdAt = new Date();
 
-    public Booking() {}
+    public Booking() {
+    }
 
-    public Booking(long id, long tourId, long travelerId, int tickets) {
+    public Booking(int id, String tourId, int travelerId, int tickets) {
         this.id = id;
         this.tourId = tourId;
         this.travelerId = travelerId;
         this.tickets = tickets;
     }
 
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public long getTourId() { return tourId; }
-    public void setTourId(long tourId) { this.tourId = tourId; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public long getTravelerId() { return travelerId; }
-    public void setTravelerId(long travelerId) { this.travelerId = travelerId; }
+    public String getTourId() {
+        return tourId;
+    }
 
-    public int getTickets() { return tickets; }
-    public void setTickets(int tickets) { this.tickets = tickets; }
+    public void setTourId(String tourId) {
+        this.tourId = tourId;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public int getTravelerId() {
+        return travelerId;
+    }
 
-    public Date getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+    public void setTravelerId(int travelerId) {
+        this.travelerId = travelerId;
+    }
+
+    public int getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(int tickets) {
+        this.tickets = tickets;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     // CANCEL BOOKING, not finished. We need to update seats.
     public void cancel() {
@@ -47,6 +78,7 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{id=" + id + ", tourId=" + tourId + ", travelerId=" + travelerId + ", tickets=" + tickets + ", status=" + status + "}";
+        return "Booking{id=" + id + ", tourId=" + tourId + ", travelerId=" + travelerId + ", tickets=" + tickets
+                + ", status=" + status + "}";
     }
 }

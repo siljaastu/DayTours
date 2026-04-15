@@ -124,8 +124,64 @@ public class TourDB {
         return results;
     }
 
+    public boolean addTraveler(Traveler traveler) {
+        boolean travelerAdded = false;
+        String query = "INSERT OR IGNORE INTO Travelers(id, name, phoneNR, email) VALUES (?, ?, ?, ?)";
+        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, traveler.getId());
+            pstmt.setString(2, traveler.getName());
+            pstmt.setString(3, traveler.getPhoneNr());
+            pstmt.setString(4, traveler.getEmail());
+
+            pstmt.executeUpdate();
+
+            travelerAdded = true;
+
+        } catch (SQLException e) {
+            System.err.println("Error saving traveler: " + e.getMessage());
+        }
+
+        return travelerAdded;
+    }
+
+    /**
+     * Takes in tour, traveler and booking.
+     * 
+     * @param tour
+     * @param traveler
+     * @param booking
+     * @return True or false based on if adding into database was a success
+     */
+    public boolean book(Booking booking) {
+        boolean booked = false;
+        String query = "INSERT INTO Bookings(id, travelerId, tourId, nrTickets, bookingStatus, createdAt) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, booking.getId());
+            pstmt.setInt(2, booking.getTravelerId());
+            pstmt.setString(3, booking.getTourId());
+            pstmt.setInt(4, booking.getTickets());
+            pstmt.setString(5, booking.getStatus());
+            pstmt.setDate(6, new java.sql.Date(booking.getCreatedAt().getTime()));
+
+            pstmt.executeUpdate();
+
+            booked = true;
+
+        } catch (SQLException e) {
+            System.err.println("Error booking: " + e.getMessage());
+        }
+
+        return booked;
+    }
+
     public static void main(String[] args)
             throws Exception {
+
+        TourDB prufa2 = new TourDB();
+        ArrayList<Tour> tours2 = new ArrayList<>(prufa2.filterByType("Northern Lights"));
+        for (Tour tour : tours2) {
+            System.out.println(tour.getTourName() + " " + tour.getTourType() + " " + tour.getPrice());
+        }
 
     }
 

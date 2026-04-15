@@ -8,7 +8,7 @@ import java.util.List;
  * Tour model.
  */
 public class Tour {
-    private String id; // added (not in our design model)
+    private String id; // er String í gagnabankanum.
     private String tourName;
     private String tourType;
     private Date date;

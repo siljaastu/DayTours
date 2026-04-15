@@ -76,16 +76,16 @@ INSERT OR REPLACE INTO Tours VALUES('DT52','Relax and Ride', 'Horse Tour', '2026
 
 -- 2. TRAVELER TABLE
 CREATE TABLE IF NOT EXISTS Travelers(
-  id char(4) PRIMARY KEY,
+  id int PRIMARY KEY,
   name varchar(50),
   phoneNR varchar(20),
   email varchar(40)
 );
 
-INSERT OR IGNORE INTO Travelers VALUES('0001','Jan Jansen', '111-1111', 'jan@gmail.com');
-INSERT OR IGNORE INTO Travelers VALUES('0002','Ken Kenson', '222-222', 'kenson@gmail.com');
-INSERT OR IGNORE INTO Travelers VALUES('0003','Lara Larson', '333-3333', 'lalak@gmail.com');
-INSERT OR IGNORE INTO Travelers VALUES('0004','Mads Madson', '444-4444', 'mass@gmail.com');
+INSERT OR IGNORE INTO Travelers VALUES(1,'Jan Jansen', '111-1111', 'jan@gmail.com');
+INSERT OR IGNORE INTO Travelers VALUES(1,'Ken Kenson', '222-222', 'kenson@gmail.com');
+INSERT OR IGNORE INTO Travelers VALUES(1,'Lara Larson', '333-3333', 'lalak@gmail.com');
+INSERT OR IGNORE INTO Travelers VALUES(1,'Mads Madson', '444-4444', 'mass@gmail.com');
 
 
 -- 3. FAVORITES TABLE
@@ -95,23 +95,21 @@ CREATE TABLE IF NOT EXISTS Favorites(
   PRIMARY KEY(travelerID, tourID)
 );
 
-INSERT OR IGNORE INTO Favorites VALUES('0001','DT05');
-INSERT OR IGNORE INTO Favorites VALUES('0001','DT06');
-INSERT OR IGNORE INTO Favorites VALUES('0002','DT18');
-INSERT OR IGNORE INTO Favorites VALUES('0002','DT27');
-INSERT OR IGNORE INTO Favorites VALUES('0003','DT52');
+INSERT OR IGNORE INTO Favorites VALUES(1,'DT05');
+INSERT OR IGNORE INTO Favorites VALUES(1,'DT06');
+INSERT OR IGNORE INTO Favorites VALUES(2,'DT18');
+INSERT OR IGNORE INTO Favorites VALUES(2,'DT27');
+INSERT OR IGNORE INTO Favorites VALUES(3,'DT52');
 
 
 -- 4. BOOKINGS TABLE
 CREATE TABLE IF NOT EXISTS Bookings(
-  id char(20) PRIMARY KEY,
-  travelerID char(4) REFERENCES Travelers(id),
-  tourID TEXT REFERENCES Tours(id),
+  id int PRIMARY KEY,
+  travelerId int REFERENCES Travelers(id),
+  tourId char(4) REFERENCES Tours(id),
   nrTickets int,
-  totalPrice int,
-  hotelPickup boolean,
-  pickupLocation varchar(40),
-  bookingStatus varchar(10)
+  bookingStatus varchar(10),
+  createdAt date
 );
 
 COMMIT;

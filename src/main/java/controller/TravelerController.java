@@ -11,6 +11,11 @@ import java.util.Optional;
  * I'm not sure to which extent we actually need a controller for travelers.
  * Mostly depends on if we're implementing addToFav.
  * But for now I'm assuming we have some sort of traveler db as well.
+ * 
+ * TRAVELER ER BARA Í SAMA DB OG ALLT ANNAÐ. EN ÞAÐ ÞARF AÐ KALLA Á
+ * ADDTRAVELER(TRAVELER TRAVELER) TIL AÐ GETA BÆTT HONUM INN Í GAGNABANKANN :)
+ * SVO ÞARF AÐ KALLA Á BOOK(TOUR TOUR, TRAVELER TRAVELER, BOOKING BOOKING) TIL
+ * ÞESS AÐ BÆTA BOOKING VIÐ Í GAGNASAFNIÐ :)
  */
 public class TravelerController {
 
@@ -18,7 +23,8 @@ public class TravelerController {
 
     // Constructor that accepts any store
     public TravelerController(TourStorageInterface store) {
-        if (store == null) throw new IllegalArgumentException("store cannot be null");
+        if (store == null)
+            throw new IllegalArgumentException("store cannot be null");
         this.store = store;
     }
 
