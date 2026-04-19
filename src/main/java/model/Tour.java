@@ -17,12 +17,11 @@ public class Tour {
     private int length;
     private int price;
     private List<String> highlights = new ArrayList<>();
-    private String imgUrl; // geri ráð fyrir einni mynd til að eynfalda hlutina aðeins
+    private String imgUrl; // geri ráð fyrir einni mynd til að einfalda hlutina aðeins
     private List<String> reviews = new ArrayList<>();
     private int capacity;
     private int minNrTravelers;
-    private int nrTravelersBooked; // could rename to nBooked or similar. Just wanted to keep it for now like it's
-                                   // in the model
+    private int nrTravelersBooked;
     private boolean isFull;
     private boolean isCancelled;
 
@@ -244,7 +243,7 @@ public class Tour {
 
     @Override
     public String toString() {
-        return "Tour{id=" + tourID + ", name='" + tourName + "', type='" + tourType + "', remaining=" + getRemainingSeats()
-                + "}";
+        return tourID + "(ID), " + tourName + ", type: " + tourType + ". Available seats: " + getRemainingSeats()
+                + ".";
     }
 }

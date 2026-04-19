@@ -1,9 +1,12 @@
 package view;
 
+import database.TourDB;
 import model.Booking;
-import database.StorageMock;
+import model.Tour;
+import model.Traveler;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -11,7 +14,8 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) {
-        controller.TourController controller = new controller.TourController(new StorageMock());
+        controller.TourController controller = new controller.TourController();
+        controller.TravelerController trController = new controller.TravelerController(new TourDB());
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Welcome to 3D DayTours!");
@@ -22,12 +26,16 @@ public class Main {
             if ("0".equals(c)) break;
             switch (c) {
                 case "1":
-                    controller.listAll().forEach(System.out::println);
+                    List<Tour> tours = controller.listUniqueTours();
+                    System.out.println("Available tours:");
+                    for (int i = 0; i < tours.size(); i++) {
+                        System.out.println((i + 1) + ": " + tours.get(i).getTourName());
+                    }
                     break;
                 case "2":
                     System.out.print("Search for: ");
                     String q = sc.nextLine().trim();
-                    List<model.Tour> results = controller.search(q);
+                    List<Tour> results = controller.search(q);
                     if (results.isEmpty()) {
                         System.out.println("No tours found for: " + q);
                     } else {
@@ -36,29 +44,132 @@ public class Main {
                     }
                     break;
                 case "3":
-                    System.out.print("Type: ");
-                    String t = sc.nextLine();
-                    controller.filterByType(t).forEach(System.out::println);
+                    System.out.println("These are the types of tours we offer:");
+                    List<String> types = controller.getAllTourTypes();
+
+                    if (types.isEmpty()) {
+                        System.out.println("Sorry, there are no tour types available.");
+                        break;
+                    }
+
+                    for (int i = 0; i < types.size(); i++) {
+                        System.out.println((i + 1) + ". " + types.get(i));
+                    }
+
+                    System.out.print("Which tour type would you like to filter by? Number: ");
+                    String input = sc.nextLine();
+
+                    int choice;
+                    try {
+                        choice = Integer.parseInt(input);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Please enter a number.");
+                        break;
+                    }
+
+                    if (choice < 1 || choice > types.size()) {
+                        System.out.println("Sorry, that input is not valid.");
+                        break;
+                    }
+
+                    String selectedType = types.get(choice - 1);
+
+                    controller.filterByType(selectedType)
+                            .forEach(System.out::println);
+
                     break;
                 case "4":
-                    System.out.print("Region: ");
-                    String r = sc.nextLine();
-                    controller.filterByRegion(r).forEach(System.out::println);
+                    System.out.println("These are the regions we offer tours in:");
+                    List<String> regions = controller.getAllRegions();
+
+                    if (regions.isEmpty()) {
+                        System.out.println("Sorry, there are no regions available.");
+                        break;
+                    }
+
+                    // print list
+                    for (int i = 0; i < regions.size(); i++) {
+                        System.out.println((i + 1) + ". " + regions.get(i));
+                    }
+
+                    System.out.print("Which region would you like to filter by? Number: ");
+                    String inputRegion = sc.nextLine();
+
+                    int regionChoice;
+                    try {
+                        regionChoice = Integer.parseInt(inputRegion);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Please enter a number.");
+                        break;
+                    }
+
+                    if (regionChoice < 1 || regionChoice > regions.size()) {
+                        System.out.println("Sorry, that input is not valid.");
+                        break;
+                    }
+
+                    String selectedRegion = regions.get(regionChoice - 1);
+
+                    controller.filterByRegion(selectedRegion)
+                            .forEach(System.out::println);
+
                     break;
                 case "5":
-                    controller.listTravelers().forEach(System.out::println);
+                    trController.listAll().forEach(System.out::println);
                     break;
                 case "6":
                     try {
-                        System.out.print("Tour id (numeric): ");
+                        List<Tour> allTours = controller.listAllTours();
+
+                        System.out.println("Available tours (use Tour ID to book):");
+                        for (Tour t : allTours) {
+                            System.out.println(
+                                    t.getTourID() + " | " +
+                                            t.getTourName() + " | " +
+                                            t.getDate() + " " +
+                                            t.getStartTime() +
+                                            " | Available seats: " + t.getRemainingSeats()
+                            );
+                        }
+
+                        // 2: user enters tour ID
+                        System.out.print("\nEnter Tour ID: ");
                         String tid = sc.nextLine().trim();
-                        System.out.print("Traveler id (numeric): ");
-                        int trid = Integer.parseInt(sc.nextLine().trim());
+
+                        // validate tour exists
+                        if (controller.findById(tid).isEmpty()) {
+                            System.out.println("Tour not found.");
+                            break;
+                        }
+
+                        // 3: traveler id
+                        System.out.print("Traveler id: ");
+                        String travelerInput = sc.nextLine().trim();
+
+                        int trid;
+                        try {
+                            trid = Integer.parseInt(travelerInput);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid traveler id.");
+                            break;
+                        }
+
+                        // 4: tickets
                         System.out.print("How many tickets? ");
-                        // Maybe we should print out how many tickets are available for the chosen tour?
-                        int tickets = Integer.parseInt(sc.nextLine().trim());
+                        String ticketInput = sc.nextLine().trim();
+
+                        int tickets;
+                        try {
+                            tickets = Integer.parseInt(ticketInput);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid number of tickets.");
+                            break;
+                        }
+
+                        // 5: book
                         Booking b = controller.book(tid, trid, tickets);
                         System.out.println("Booked: " + b);
+
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
                     }

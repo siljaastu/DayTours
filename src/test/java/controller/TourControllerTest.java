@@ -1,5 +1,6 @@
 package controller;
 
+import database.TourDB;
 import model.Tour;
 import database.StorageMock;
 import org.junit.jupiter.api.AfterEach;
@@ -26,7 +27,7 @@ class TourControllerTest {
      */
     @BeforeEach
     void setUp() {
-        controller = new controller.TourController(new StorageMock());
+        controller = new controller.TourController();
     }
 
     /**

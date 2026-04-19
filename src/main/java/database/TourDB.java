@@ -5,6 +5,7 @@ import model.Traveler;
 import model.Booking;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class TourDB {
     private String url = "jdbc:sqlite:src/main/java/database/tours.db";
@@ -52,6 +53,7 @@ public class TourDB {
      * @throws SQLeseption
      */
 
+
     public ArrayList<Tour> search(String keyword) {
         ArrayList<Tour> results = new ArrayList<>();
         String query = "SELECT * FROM tours WHERE name LIKE ?";
@@ -70,6 +72,24 @@ public class TourDB {
         return results;
     }
 
+    public ArrayList<Tour> listTours() {
+        ArrayList<Tour> results = new ArrayList<>();
+        String query = "SELECT * FROM Tours";
+
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                results.add(mapResultSetToTour(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
     public ArrayList<Tour> filterByRegion(String region) {
         ArrayList<Tour> results = new ArrayList<>();
         String query = "SELECT * FROM tours WHERE region = ?";
@@ -124,6 +144,7 @@ public class TourDB {
         return results;
     }
 
+
     public boolean addTraveler(Traveler traveler) {
         boolean travelerAdded = false;
         String query = "INSERT OR IGNORE INTO Travelers(id, name, phoneNR, email) VALUES (?, ?, ?, ?)";
@@ -154,15 +175,13 @@ public class TourDB {
      */
     public boolean book(Booking booking) {
         boolean booked = false;
-        String query = "INSERT INTO Bookings(id, travelerId, tourId, nrTickets, bookingStatus, createdAt) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Bookings(travelerId, tourId, nrTickets, bookingStatus, createdAt) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, booking.getId());
-            pstmt.setInt(2, booking.getTravelerId());
-            pstmt.setString(3, booking.getTourId());
-            pstmt.setInt(4, booking.getTickets());
-            pstmt.setString(5, booking.getStatus());
-            pstmt.setDate(6, new java.sql.Date(booking.getCreatedAt().getTime()));
-
+            pstmt.setInt(1, booking.getTravelerId());
+            pstmt.setString(2, booking.getTourId());
+            pstmt.setInt(3, booking.getTickets());
+            pstmt.setString(4, booking.getStatus());
+            pstmt.setDate(5, new java.sql.Date(booking.getCreatedAt().getTime()));
             pstmt.executeUpdate();
 
             booked = true;
@@ -170,8 +189,124 @@ public class TourDB {
         } catch (SQLException e) {
             System.err.println("Error booking: " + e.getMessage());
         }
-
         return booked;
+    }
+
+    public void updateTour(Tour tour) {
+        String query = """
+        UPDATE Tours 
+        SET nrBookings = ?, full = ?
+        WHERE id = ?
+    """;
+
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, tour.getNrTravelersBooked());
+            pstmt.setBoolean(2, tour.isFull());
+            pstmt.setString(3, tour.getTourID());
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public ArrayList<Traveler> listTravelers() {
+        ArrayList<Traveler> results = new ArrayList<>();
+        String query = "SELECT * FROM Travelers";
+
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                Traveler t = new Traveler();
+                t.setId(rs.getInt("id"));
+                t.setName(rs.getString("name"));
+                t.setPhoneNr(rs.getString("phoneNR"));
+                t.setEmail(rs.getString("email"));
+
+                results.add(t);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    public Optional<Traveler> findTraveler(int id) {
+        String query = "SELECT * FROM Travelers WHERE id = ?";
+
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Traveler t = new Traveler();
+                t.setId(rs.getInt("id"));
+                t.setName(rs.getString("name"));
+                t.setPhoneNr(rs.getString("phoneNR"));
+                t.setEmail(rs.getString("email"));
+                return Optional.of(t);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+    public ArrayList<Booking> listBookings() {
+        ArrayList<Booking> results = new ArrayList<>();
+        String query = "SELECT * FROM Bookings";
+
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                Booking b = new Booking(
+                        rs.getString("tourId"),
+                        rs.getInt("travelerId"),
+                        rs.getInt("nrTickets")
+                );
+
+                b.setStatus(rs.getString("bookingStatus"));
+                b.setCreatedAt(rs.getDate("createdAt"));
+
+                results.add(b);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    public Optional<Tour> findTourById(String id) {
+        String query = "SELECT * FROM Tours WHERE id = ?";
+
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return Optional.of(mapResultSetToTour(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
     }
 
     public static void main(String[] args)

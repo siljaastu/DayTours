@@ -6,7 +6,7 @@ import java.util.Date;
  * Booking model.
  */
 public class Booking {
-    private int id;
+    //private int id; // handled automatically with inc in sql
     private String tourId;
     private int travelerId;
     private int tickets;
@@ -16,20 +16,20 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(int id, String tourId, int travelerId, int tickets) {
-        this.id = id;
+    public Booking(String tourId, int travelerId, int tickets) {
+        //this.id = id;
         this.tourId = tourId;
         this.travelerId = travelerId;
         this.tickets = tickets;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getTourId() {
         return tourId;
@@ -78,7 +78,7 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{id=" + id + ", tourId=" + tourId + ", travelerId=" + travelerId + ", tickets=" + tickets
+        return "Booking{tourId=" + tourId + ", travelerId=" + travelerId + ", tickets=" + tickets
                 + ", status=" + status + "}";
     }
 }
