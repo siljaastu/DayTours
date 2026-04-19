@@ -23,7 +23,7 @@ public class TourDB {
      */
     private Tour mapResultSetToTour(ResultSet rs) throws SQLException {
         Tour tour = new Tour();
-        tour.setId(rs.getString("id"));
+        tour.setTourID(rs.getString("id"));
         tour.setTourName(rs.getString("name"));
         tour.setTourType(rs.getString("type"));
         String dateString = rs.getString("day");

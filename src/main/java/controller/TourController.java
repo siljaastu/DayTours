@@ -1,7 +1,6 @@
 package controller;
 
-import database.TourStorageInterface;
-import database.StorageMock;
+import database.TourDB;
 import model.Tour;
 import model.Traveler;
 import model.Booking;
@@ -16,15 +15,11 @@ import java.util.stream.Collectors;
 
 public class TourController {
 
-    private final database.TourStorageInterface store;
+    private final TourDB store;
 
     // def constructor
     public TourController() {
-        this.store = new database.StorageMock();
-    }
-
-    public TourController(database.TourStorageInterface store) {
-        this.store = store;
+        this.store = new TourDB();
     }
 
     // SEARCH.
@@ -159,7 +154,7 @@ public class TourController {
     // BOOKING
     // Haven't done many functions with bookings
     // was a bit back and forth again with the manager dilemma we had
-    public Booking book(long tourId, long travelerId, int tickets) {
+    public Booking book(String tourId, int travelerId, int tickets) {
         if (tickets <= 0)
             throw new IllegalArgumentException("tickets must be > 0");
 

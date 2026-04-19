@@ -51,9 +51,9 @@ public class Main {
                 case "6":
                     try {
                         System.out.print("Tour id (numeric): ");
-                        long tid = Long.parseLong(sc.nextLine().trim());
+                        String tid = sc.nextLine().trim();
                         System.out.print("Traveler id (numeric): ");
-                        long trid = Long.parseLong(sc.nextLine().trim());
+                        int trid = Integer.parseInt(sc.nextLine().trim());
                         System.out.print("How many tickets? ");
                         // Maybe we should print out how many tickets are available for the chosen tour?
                         int tickets = Integer.parseInt(sc.nextLine().trim());
