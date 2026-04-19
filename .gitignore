@@ -2,6 +2,12 @@
 out/
 *.class
 
+# Maven
+target/
+
+# DB files
+*.db
+
 # Ignore for now
 /src/main/java/database/TourStorageInterface.java
 /src/main/java/database/StorageMock.java
