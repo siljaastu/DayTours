@@ -8,7 +8,7 @@ import java.util.List;
  * Tour model.
  */
 public class Tour {
-    private String id; // er String í gagnabankanum.
+    private String tourID; // er String í gagnabankanum.
     private String tourName;
     private String tourType;
     private Date date;
@@ -37,17 +37,17 @@ public class Tour {
     }
 
     // Constructor that accepts an id for calls like new Tour(0, "Name", "Type")
-    public Tour(String id, String tourName, String tourType) {
-        this.id = id;
+    public Tour(String tourID, String tourName, String tourType) {
+        this.tourID = tourID;
         this.tourName = tourName;
         this.tourType = tourType;
 
     }
 
     // constructor for some fields
-    public Tour(String id, String name, String type, String region,
-            int price, int length, String startTime, int capacity) {
-        this.id = id;
+    public Tour(String tourID, String name, String type, String region,
+                int price, int length, String startTime, int capacity) {
+        this.tourID = tourID;
         this.tourName = name;
         this.tourType = type;
         this.region = region;
@@ -59,10 +59,10 @@ public class Tour {
     }
 
     // constructor for all fields
-    public Tour(String id, String tourName, String tourType, Date date, String region, String startTime,
-            int length, int price, String imgUrl, int capacity, int minNrTravelers, int nrTravelersBooked,
-            boolean isFull, boolean isCancelled) {
-        this.id = id;
+    public Tour(String tourID, String tourName, String tourType, Date date, String region, String startTime,
+                int length, int price, String imgUrl, int capacity, int minNrTravelers, int nrTravelersBooked,
+                boolean isFull, boolean isCancelled) {
+        this.tourID = tourID;
         this.tourName = tourName;
         this.tourType = tourType;
         this.date = date;
@@ -93,12 +93,12 @@ public class Tour {
     }
 
     // getters and setters - some probably redundant
-    public String getId() {
-        return id;
+    public String getTourID() {
+        return tourID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTourID(String tourID) {
+        this.tourID = tourID;
     }
 
     public String getTourName() {
@@ -244,7 +244,7 @@ public class Tour {
 
     @Override
     public String toString() {
-        return "Tour{id=" + id + ", name='" + tourName + "', type='" + tourType + "', remaining=" + getRemainingSeats()
+        return "Tour{id=" + tourID + ", name='" + tourName + "', type='" + tourType + "', remaining=" + getRemainingSeats()
                 + "}";
     }
 }

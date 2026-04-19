@@ -2,8 +2,9 @@
 out/
 *.class
 
-# Exclude first trial database
-/src/main/java/database/InMemoryStore.java
+# Ignore for now
+/src/main/java/database/TourStorageInterface.java
+/src/main/java/database/StorageMock.java
 
 # IntelliJ
 .idea/
