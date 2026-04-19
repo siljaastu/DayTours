@@ -6,7 +6,7 @@ out/
 target/
 
 # DB files
-*.db
+#*.db
 
 # Ignore for now
 /src/main/java/database/TourStorageInterface.java

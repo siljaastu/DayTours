@@ -14,11 +14,18 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) {
-        controller.TourController controller = new controller.TourController();
-        controller.TravelerController trController = new controller.TravelerController(new TourDB());
+        TourDB db = new TourDB();
+        controller.TourController controller = new controller.TourController(db);
+        controller.TravelerController trController = new controller.TravelerController(db);
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Welcome to 3D DayTours!");
+        List<Traveler> travelers = trController.listAll();
+        System.out.println("Travelers count: " + travelers.size());
+        travelers.forEach(System.out::println);
+        System.out.println("DB path: " + new java.io.File("src/main/java/database/tours.db").getAbsolutePath());
+
+
         while (true) {
             System.out.println("\nMenu: \n1: List of tours \n2: Search for a tour \n3: Filter tours by type \n4: Filter tours by region \n5: List travelers \n6: Book a tour \n0: Exit");
             System.out.print("What do you want to do? ");
@@ -94,7 +101,6 @@ public class Main {
 
                     System.out.print("Which region would you like to filter by? Number: ");
                     String inputRegion = sc.nextLine();
-
                     int regionChoice;
                     try {
                         regionChoice = Integer.parseInt(inputRegion);
@@ -112,10 +118,10 @@ public class Main {
 
                     controller.filterByRegion(selectedRegion)
                             .forEach(System.out::println);
-
                     break;
                 case "5":
                     trController.listAll().forEach(System.out::println);
+                    controller.listBookings().forEach(System.out::println);
                     break;
                 case "6":
                     try {

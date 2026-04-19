@@ -144,6 +144,51 @@ public class TourDB {
         return results;
     }
 
+    public ArrayList<Tour> listUniqueTours() {
+        ArrayList<Tour> results = new ArrayList<>();
+        String query = "SELECT * FROM Tours GROUP BY name";
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) results.add(mapResultSetToTour(rs));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public ArrayList<String> getDistinctRegions() {
+        ArrayList<String> results = new ArrayList<>();
+        String query = "SELECT DISTINCT region FROM Tours WHERE region IS NOT NULL ORDER BY region";
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                results.add(rs.getString("region"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public ArrayList<String> getDistinctTypes() {
+        ArrayList<String> results = new ArrayList<>();
+        String query = "SELECT DISTINCT type FROM Tours WHERE type IS NOT NULL ORDER BY type";
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                results.add(rs.getString("type"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+
+
 
     public boolean addTraveler(Traveler traveler) {
         boolean travelerAdded = false;

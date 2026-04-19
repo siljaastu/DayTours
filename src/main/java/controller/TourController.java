@@ -5,6 +5,7 @@ import model.Tour;
 import model.Traveler;
 import model.Booking;
 
+import java.awt.print.Book;
 import java.text.Normalizer;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,8 +19,8 @@ public class TourController {
     private final TourDB store;
 
     // def constructor
-    public TourController() {
-        this.store = new TourDB();
+    public TourController(TourDB tourDB) {
+        this.store = tourDB;
     }
 
     // SEARCH
@@ -60,41 +61,41 @@ public class TourController {
         return ca.get(Calendar.YEAR) == cb.get(Calendar.YEAR)
                 && ca.get(Calendar.DAY_OF_YEAR) == cb.get(Calendar.DAY_OF_YEAR);
     }
+    // this should be done in TourDB if we want to keep it
+//    public List<Tour> filterByTimeOfDay(String timeOfDay) {
+//        if (timeOfDay == null)
+//            return Collections.emptyList();
+//
+//        return store.listTours().stream()
+//                .filter(t -> {
+//                    String st = t.getStartTime();
+//                    if (st == null)
+//                        return false;
+//
+//                    try {
+//                        int hour = Integer.parseInt(st.split(":")[0]);
+//
+//                        switch (timeOfDay.toLowerCase()) {
+//                            case "morning":
+//                                return hour < 12;
+//                            case "afternoon":
+//                                return hour >= 12 && hour < 18;
+//                            case "evening":
+//                                return hour >= 18;
+//                            default:
+//                                return false;
+//                        }
+//                    } catch (Exception e) {
+//                        return false;
+//                    }
+//                }).collect(Collectors.toList());
+//    }
 
-    public List<Tour> filterByTimeOfDay(String timeOfDay) {
-        if (timeOfDay == null)
-            return Collections.emptyList();
-
-        return store.listTours().stream()
-                .filter(t -> {
-                    String st = t.getStartTime();
-                    if (st == null)
-                        return false;
-
-                    try {
-                        int hour = Integer.parseInt(st.split(":")[0]);
-
-                        switch (timeOfDay.toLowerCase()) {
-                            case "morning":
-                                return hour < 12;
-                            case "afternoon":
-                                return hour >= 12 && hour < 18;
-                            case "evening":
-                                return hour >= 18;
-                            default:
-                                return false;
-                        }
-                    } catch (Exception e) {
-                        return false;
-                    }
-                }).collect(Collectors.toList());
-    }
-
-    public List<Tour> filterByPrice(int price) {
-        return store.listTours().stream()
-                .filter(t -> t.getPrice() <= price)
-                .collect(Collectors.toList());
-    }
+//    public List<Tour> filterByPrice(int price) {
+//        return store.listTours().stream()
+//                .filter(t -> t.getPrice() <= price)
+//                .collect(Collectors.toList());
+//    }
 
     public List<Tour> filterByType(String type) {
         if (type == null)
@@ -102,6 +103,7 @@ public class TourController {
         return store.filterByType(type);
     }
 
+    // this should be done in TourDB if we want to keep it
     public List<Tour> filterByLength(int hours) {
         return store.listTours().stream()
                 .filter(t -> t.getLength() <= hours)
@@ -109,19 +111,20 @@ public class TourController {
     }
 
     // SIMILAR TOURS
-    public List<Tour> showSimilarTours(Tour tour) {
-        if (tour == null)
-            return Collections.emptyList();
-
-        return store.listTours().stream()
-                .filter(t -> !t.equals(tour) &&
-                        ((t.getTourType() != null &&
-                                t.getTourType().equalsIgnoreCase(tour.getTourType()))
-                                ||
-                                (t.getRegion() != null &&
-                                        t.getRegion().equalsIgnoreCase(tour.getRegion()))))
-                .collect(Collectors.toList());
-    }
+    // this should be done in TourDB if we want to keep it
+//    public List<Tour> showSimilarTours(Tour tour) {
+//        if (tour == null)
+//            return Collections.emptyList();
+//
+//        return store.listTours().stream()
+//                .filter(t -> !t.equals(tour) &&
+//                        ((t.getTourType() != null &&
+//                                t.getTourType().equalsIgnoreCase(tour.getTourType()))
+//                                ||
+//                                (t.getRegion() != null &&
+//                                        t.getRegion().equalsIgnoreCase(tour.getRegion()))))
+//                .collect(Collectors.toList());
+//    }
 
     // BOOKING
     public Booking book(String tourId, int travelerId, int tickets) {
@@ -155,42 +158,25 @@ public class TourController {
 
     // Get Tour types, for filtering
     public List<String> getAllTourTypes() {
-        return store.listTours().stream()
-                .map(Tour::getTourType)
-                .distinct()
-                .sorted()
-                .toList();
+        return store.getDistinctTypes();
     }
+
 
     // get regions for filtering
     public List<String> getAllRegions() {
-        return store.listTours().stream()
-                .map(Tour::getRegion)
-                .filter(Objects::nonNull)
-                .distinct()
-                .sorted()
-                .toList();
+        return store.getDistinctRegions();
     }
 
     // List (without duplicates) for ui
     public List<Tour> listUniqueTours() {
-        return store.listTours().stream()
-                .collect(Collectors.groupingBy(Tour::getTourName))
-                .values()
-                .stream()
-                .map(list -> list.get(0))
-                .collect(Collectors.toList());
+        return store.listUniqueTours();
     }
     // for booking in ui
     public Optional<Tour> findById(String id) {
         return store.findTourById(id);
     }
-
-    // All dep for a selected tour name
-    public List<Tour> getDepartures(String tourName) {
-        return store.listTours().stream()
-                .filter(t -> t.getTourName().equalsIgnoreCase(tourName))
-                .sorted(Comparator.comparing(Tour::getDate))
-                .collect(Collectors.toList());
+    public List<Booking> listBookings(){
+        return store.listBookings();
     }
+
 }

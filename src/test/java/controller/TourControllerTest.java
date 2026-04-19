@@ -27,7 +27,7 @@ class TourControllerTest {
      */
     @BeforeEach
     void setUp() {
-        controller = new controller.TourController();
+        controller = new controller.TourController(new TourDB());
     }
 
     /**
