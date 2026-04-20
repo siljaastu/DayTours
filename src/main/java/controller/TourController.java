@@ -150,6 +150,47 @@ public class TourController {
         return b;
     }
 
+    public Booking bookWithNewTraveler(String tourId, String name, String phone, String email, int tickets) {
+        if (tourId == null || tourId.isBlank()) {
+            throw new IllegalArgumentException("Tour ID is required.");
+        }
+    
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name is required.");
+        }
+    
+        if (phone == null || phone.isBlank()) {
+            throw new IllegalArgumentException("Phone number is required.");
+        }
+    
+        if (tickets <= 0) {
+            throw new IllegalArgumentException("Number of tickets must be positive.");
+        }
+    
+        Tour tour = store.findTourById(tourId)
+                .orElseThrow(() -> new IllegalArgumentException("Tour not found."));
+    
+        if (!tour.validateAvailability(tickets)) {
+            throw new IllegalArgumentException("Not enough seats available.");
+        }
+    
+        Traveler traveler = new Traveler();
+        traveler.setName(name);
+        traveler.setPhoneNr(phone);
+        traveler.setEmail(email);
+    
+        int travelerId = store.addTraveler(traveler);
+        traveler.setId(travelerId);
+    
+        tour.setNrTravelersBooked(tour.getNrTravelersBooked() + tickets);
+        store.updateTour(tour);
+    
+        Booking booking = new Booking(tourId, travelerId, tickets);
+        store.book(booking);
+    
+        return booking;
+    }
+
     // LIST
     // Returns ALL tours
     public List<Tour> listAllTours() {
