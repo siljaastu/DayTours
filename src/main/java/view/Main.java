@@ -148,6 +148,7 @@ public class Main {
                         }
 
                         // 3: traveler id
+                        /* 
                         System.out.print("Traveler id: ");
                         String travelerInput = sc.nextLine().trim();
 
@@ -158,7 +159,16 @@ public class Main {
                             System.out.println("Invalid traveler id.");
                             break;
                         }
-
+                        */
+                        System.out.print("Name: ");
+                        String name = sc.nextLine().trim();
+                        
+                        System.out.print("Phone number: ");
+                        String phone = sc.nextLine().trim();
+                        
+                        System.out.print("Email: ");
+                        String email = sc.nextLine().trim();
+                       
                         // 4: tickets
                         System.out.print("How many tickets? ");
                         String ticketInput = sc.nextLine().trim();
@@ -171,8 +181,19 @@ public class Main {
                             break;
                         }
 
+                        if (name.isBlank() || phone.isBlank()) {
+                            System.out.println("Name and phone number are required.");
+                            break;
+                        }
+                        
+                        if (tickets <= 0) {
+                            System.out.println("Number of tickets must be positive.");
+                            break;
+                        }
+
                         // 5: book
-                        Booking b = controller.book(tid, trid, tickets);
+                        // Booking b = controller.book(tid, trid, tickets);
+                        Booking b = controller.bookWithNewTraveler(tid, name, phone, email, tickets);
                         System.out.println("Booked: " + b);
 
                     } catch (Exception e) {
