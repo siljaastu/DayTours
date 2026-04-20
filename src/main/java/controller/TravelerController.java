@@ -1,7 +1,7 @@
 package controller;
 
 import database.TourDB;
-import database.TourStorageInterface;
+//import database.TourStorageInterface;
 import model.Traveler;
 
 import java.util.List;
@@ -47,7 +47,13 @@ public class TravelerController {
     /**
      * Create a new traveler.
      */
+    /*
     public boolean createTraveler(Traveler t) {
+        return store.addTraveler(t);
+    }
+    */
+
+    public int createTraveler(Traveler t) {
         return store.addTraveler(t);
     }
 
