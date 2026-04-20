@@ -27,7 +27,7 @@ public class Main {
 
 
         while (true) {
-            System.out.println("\nMenu: \n1: List of tours \n2: Search for a tour \n3: Filter tours by type \n4: Filter tours by region \n5: List travelers \n6: Book a tour \n0: Exit");
+            System.out.println("\nMenu: \n1: List of tours \n2: Search for a tour \n3: Filter tours by type \n4: Filter tours by region \n5: List travelers \n6: Book a tour \n7: View all bookings \n0: Exit");
             System.out.print("What do you want to do? ");
             String c = sc.nextLine().trim();
             if ("0".equals(c)) break;
@@ -121,7 +121,6 @@ public class Main {
                     break;
                 case "5":
                     trController.listAll().forEach(System.out::println);
-                    controller.listBookings().forEach(System.out::println);
                     break;
                 case "6":
                     try {
@@ -179,6 +178,9 @@ public class Main {
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
                     }
+                    break;
+                case "7":
+                    controller.listBookings().forEach(System.out::println);
                     break;
                 default:
                     System.out.println("Unknown choice, please choose a number between 1-6 from the menu or 0 to exit.");

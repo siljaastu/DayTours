@@ -90,7 +90,7 @@ public class TourController {
 //                    }
 //                }).collect(Collectors.toList());
 //    }
-
+    // this should be done in TourDB if we want to keep it
 //    public List<Tour> filterByPrice(int price) {
 //        return store.listTours().stream()
 //                .filter(t -> t.getPrice() <= price)
