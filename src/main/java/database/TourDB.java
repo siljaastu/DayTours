@@ -189,11 +189,16 @@ public class TourDB {
 
 
 
-
+    /*
     public boolean addTraveler(Traveler traveler) {
-        boolean travelerAdded = false;
+         boolean travelerAdded = false;
         String query = "INSERT OR IGNORE INTO Travelers(id, name, phoneNR, email) VALUES (?, ?, ?, ?)";
-       
+    */
+
+    public int addTraveler(Traveler traveler) {
+    String query = "INSERT INTO Travelers(name, phoneNR, email) VALUES (?, ?, ?)";
+
+        
         /*
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
            
@@ -242,6 +247,7 @@ public class TourDB {
         } catch (SQLException e) {
             throw new RuntimeException("Error saving traveler: " + e.getMessage(), e);
         }
+    }
 
     /**
      * Takes in tour, traveler and booking.
