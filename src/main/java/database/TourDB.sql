@@ -76,7 +76,8 @@ INSERT OR REPLACE INTO Tours VALUES('DT52','Relax and Ride', 'Horse Tour', '2026
 
 -- 2. TRAVELER TABLE
 CREATE TABLE IF NOT EXISTS Travelers(
-  id int PRIMARY KEY,
+  -- id int PRIMARY KEY,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   name varchar(50),
   phoneNR varchar(20),
   email varchar(40)
