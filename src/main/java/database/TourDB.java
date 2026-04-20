@@ -193,22 +193,55 @@ public class TourDB {
     public boolean addTraveler(Traveler traveler) {
         boolean travelerAdded = false;
         String query = "INSERT OR IGNORE INTO Travelers(id, name, phoneNR, email) VALUES (?, ?, ?, ?)";
+       
+        /*
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+           
             pstmt.setInt(1, traveler.getId());
             pstmt.setString(2, traveler.getName());
             pstmt.setString(3, traveler.getPhoneNr());
             pstmt.setString(4, traveler.getEmail());
+    
 
             pstmt.executeUpdate();
 
             travelerAdded = true;
+       
 
+
+            
         } catch (SQLException e) {
             System.err.println("Error saving traveler: " + e.getMessage());
         }
 
         return travelerAdded;
     }
+
+    */
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+    
+            pstmt.setString(1, traveler.getName());
+            pstmt.setString(2, traveler.getPhoneNr());
+            pstmt.setString(3, traveler.getEmail());
+    
+            int affectedRows = pstmt.executeUpdate();
+    
+            if (affectedRows == 0) {
+                throw new SQLException("Creating traveler failed, no rows affected.");
+            }
+    
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating traveler failed, no ID obtained.");
+                }
+            }
+    
+        } catch (SQLException e) {
+            throw new RuntimeException("Error saving traveler: " + e.getMessage(), e);
+        }
 
     /**
      * Takes in tour, traveler and booking.
