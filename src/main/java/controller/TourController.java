@@ -68,7 +68,6 @@ public class TourController {
         return store.filterByType(type);
     }
 
-    // this should be done in TourDB if we want to keep it
     public List<Tour> filterByLength(int hours) {
         return store.listTours().stream()
                 .filter(t -> t.getLength() <= hours)
