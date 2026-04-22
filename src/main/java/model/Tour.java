@@ -154,6 +154,7 @@ public class Tour {
     }
 
     /*
+    // Not implemented. Saved for future implementation.
     public List<String> getHighlights() {
         return highlights;
     }
@@ -208,6 +209,7 @@ public class Tour {
     }
 
     /*
+    // Not implemented. Saved for future implementation.
     public boolean isCancelled() {
         return isCancelled;
     }
@@ -230,6 +232,7 @@ public class Tour {
     }
 
     /*
+    // Not implemented. Saved for future implementation.
     public void addReview(String review) {
         if (review != null && !review.trim().isEmpty())
             reviews.add(review.trim());
