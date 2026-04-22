@@ -53,7 +53,6 @@ public class TourDB {
      * @throws SQLeseption
      */
 
-
     public ArrayList<Tour> search(String keyword) {
         ArrayList<Tour> results = new ArrayList<>();
         String query = "SELECT * FROM tours WHERE name LIKE ?";
@@ -187,13 +186,6 @@ public class TourDB {
         return results;
     }
 
-
-
-    /*
-    public boolean addTraveler(Traveler traveler) {
-         boolean travelerAdded = false;
-        String query = "INSERT OR IGNORE INTO Travelers(id, name, phoneNR, email) VALUES (?, ?, ?, ?)";
-    */
 
     public int addTraveler(Traveler traveler) {
     String query = "INSERT INTO Travelers(name, phoneNR, email) VALUES (?, ?, ?)";
