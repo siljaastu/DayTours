@@ -61,41 +61,6 @@ public class TourController {
         return ca.get(Calendar.YEAR) == cb.get(Calendar.YEAR)
                 && ca.get(Calendar.DAY_OF_YEAR) == cb.get(Calendar.DAY_OF_YEAR);
     }
-    // this should be done in TourDB if we want to keep it
-//    public List<Tour> filterByTimeOfDay(String timeOfDay) {
-//        if (timeOfDay == null)
-//            return Collections.emptyList();
-//
-//        return store.listTours().stream()
-//                .filter(t -> {
-//                    String st = t.getStartTime();
-//                    if (st == null)
-//                        return false;
-//
-//                    try {
-//                        int hour = Integer.parseInt(st.split(":")[0]);
-//
-//                        switch (timeOfDay.toLowerCase()) {
-//                            case "morning":
-//                                return hour < 12;
-//                            case "afternoon":
-//                                return hour >= 12 && hour < 18;
-//                            case "evening":
-//                                return hour >= 18;
-//                            default:
-//                                return false;
-//                        }
-//                    } catch (Exception e) {
-//                        return false;
-//                    }
-//                }).collect(Collectors.toList());
-//    }
-    // this should be done in TourDB if we want to keep it
-//    public List<Tour> filterByPrice(int price) {
-//        return store.listTours().stream()
-//                .filter(t -> t.getPrice() <= price)
-//                .collect(Collectors.toList());
-//    }
 
     public List<Tour> filterByType(String type) {
         if (type == null)
@@ -110,21 +75,6 @@ public class TourController {
                 .collect(Collectors.toList());
     }
 
-    // SIMILAR TOURS
-    // this should be done in TourDB if we want to keep it
-//    public List<Tour> showSimilarTours(Tour tour) {
-//        if (tour == null)
-//            return Collections.emptyList();
-//
-//        return store.listTours().stream()
-//                .filter(t -> !t.equals(tour) &&
-//                        ((t.getTourType() != null &&
-//                                t.getTourType().equalsIgnoreCase(tour.getTourType()))
-//                                ||
-//                                (t.getRegion() != null &&
-//                                        t.getRegion().equalsIgnoreCase(tour.getRegion()))))
-//                .collect(Collectors.toList());
-//    }
 
     // BOOKING
     public Booking book(String tourId, int travelerId, int tickets) {
