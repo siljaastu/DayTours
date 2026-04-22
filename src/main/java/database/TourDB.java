@@ -198,29 +198,6 @@ public class TourDB {
     public int addTraveler(Traveler traveler) {
     String query = "INSERT INTO Travelers(name, phoneNR, email) VALUES (?, ?, ?)";
 
-        
-        /*
-        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
-           
-            pstmt.setInt(1, traveler.getId());
-            pstmt.setString(2, traveler.getName());
-            pstmt.setString(3, traveler.getPhoneNr());
-            pstmt.setString(4, traveler.getEmail());
-    
-
-            pstmt.executeUpdate();
-
-            travelerAdded = true;
-       
-
-
-            
-        } catch (SQLException e) {
-            System.err.println("Error saving traveler: " + e.getMessage());
-        }
-
-        return travelerAdded;
-    }
 
     */
         try (Connection conn = this.connect();
