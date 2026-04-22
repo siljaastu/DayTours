@@ -199,7 +199,7 @@ public class TourDB {
     String query = "INSERT INTO Travelers(name, phoneNR, email) VALUES (?, ?, ?)";
 
 
-    */
+    
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
     
