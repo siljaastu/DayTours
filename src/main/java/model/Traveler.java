@@ -56,6 +56,8 @@ public class Traveler {
         this.email = email;
     }
 
+    /*
+    // Not implemented. Saved for future implementation.
     public Set<Long> getFavorites() {
         return favorites;
     }
@@ -66,7 +68,7 @@ public class Traveler {
 
     public void addToFavorites(long tourId) {
         favorites.add(tourId);
-    }
+    */
 
     @Override
     public String toString() {
