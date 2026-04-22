@@ -1,9 +1,6 @@
 package controller;
-
 import database.TourDB;
-//import database.TourStorageInterface;
 import model.Traveler;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +17,6 @@ import java.util.Optional;
  */
 public class TravelerController {
 
-    //private final TourStorageInterface store;
     private final TourDB store;
 
     // Constructor that accepts any store
@@ -44,21 +40,13 @@ public class TravelerController {
         return store.findTraveler(id);
     }
 
-    /**
-     * Create a new traveler.
-     */
-    /*
-    public boolean createTraveler(Traveler t) {
-        return store.addTraveler(t);
-    }
-    */
 
     public int createTraveler(Traveler t) {
         return store.addTraveler(t);
     }
 
     /**
-     * Add to favorites skeleton, not sure if we want to implement
+     * Add to favorites skeleton, not implemented yet
      */
 //    public Traveler addToFavorites(long travelerId, long tourid) {
 //        Traveler tr = store.findTraveler(travelerId)
