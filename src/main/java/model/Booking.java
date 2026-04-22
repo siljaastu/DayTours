@@ -6,18 +6,16 @@ import java.util.Date;
  * Booking model.
  */
 public class Booking {
-    //private int id; // handled automatically with inc in sql
     private String tourId;
     private int travelerId;
     private int tickets;
-    private String status = "CONFIRMED"; // CONFIRMED / CANCELLED
+    private String status = "CONFIRMED";
     private Date createdAt = new Date();
 
     public Booking() {
     }
 
     public Booking(String tourId, int travelerId, int tickets) {
-        //this.id = id;
         this.tourId = tourId;
         this.travelerId = travelerId;
         this.tickets = tickets;
@@ -65,7 +63,7 @@ public class Booking {
     }
     
     /*
-    // CANCEL BOOKING, not finished. We need to update seats.
+    // Not implemented. Saved for future implementation.
     public void cancel() {
         this.status = "CANCELLED";
     }
