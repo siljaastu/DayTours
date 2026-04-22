@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Traveler model. Traveler info and maybe favorites?
+ * Traveler model
  */
 public class Traveler {
     private int id;
@@ -64,9 +64,6 @@ public class Traveler {
         this.favorites = favorites;
     }
 
-    /**
-     * Moved this from Tour (in design model)
-     */
     public void addToFavorites(long tourId) {
         favorites.add(tourId);
     }
