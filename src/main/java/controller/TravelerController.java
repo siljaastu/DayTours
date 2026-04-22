@@ -6,14 +6,6 @@ import java.util.Optional;
 
 /**
  * Controller for traveler-related ops.
- * I'm not sure to which extent we actually need a controller for travelers.
- * Mostly depends on if we're implementing addToFav.
- * But for now I'm assuming we have some sort of traveler db as well.
- * 
- * TRAVELER ER BARA Í SAMA DB OG ALLT ANNAÐ. EN ÞAÐ ÞARF AÐ KALLA Á
- * ADDTRAVELER(TRAVELER TRAVELER) TIL AÐ GETA BÆTT HONUM INN Í GAGNABANKANN :)
- * SVO ÞARF AÐ KALLA Á BOOK(TOUR TOUR, TRAVELER TRAVELER, BOOKING BOOKING) TIL
- * ÞESS AÐ BÆTA BOOKING VIÐ Í GAGNASAFNIÐ :)
  */
 public class TravelerController {
 
@@ -46,7 +38,8 @@ public class TravelerController {
     }
 
     /**
-     * Add to favorites skeleton, not implemented yet
+     * Not implemented. Saved for future implementation.
+     * Add to favorites skeleton.
      */
 //    public Traveler addToFavorites(long travelerId, long tourid) {
 //        Traveler tr = store.findTraveler(travelerId)
