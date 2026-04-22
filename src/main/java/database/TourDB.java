@@ -39,7 +39,7 @@ public class TourDB {
         tour.setCapacity(rs.getInt("capacity"));
         tour.setNrTravelersBooked(rs.getInt("nrBookings"));
         tour.setIsFull(rs.getBoolean("full"));
-        tour.setIsCancelled(rs.getBoolean("cancelled"));
+        //tour.setIsCancelled(rs.getBoolean("cancelled"));
 
         return tour;
     }
