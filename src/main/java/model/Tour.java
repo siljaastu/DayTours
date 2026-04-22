@@ -173,6 +173,7 @@ public class Tour {
     }
 
     /*
+    // Not implemented. Saved for future implementation.
     public List<String> getReviews() {
         return reviews;
     }
@@ -190,7 +191,8 @@ public class Tour {
         this.capacity = capacity;
     }
 
-    /*
+    /*    
+    // Not implemented. Saved for future implementation.
     public int getMinNrTravelers() {
         return minNrTravelers;
     }
