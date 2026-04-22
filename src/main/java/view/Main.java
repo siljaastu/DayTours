@@ -147,19 +147,7 @@ public class Main {
                             break;
                         }
 
-                        // 3: traveler id
-                        /* 
-                        System.out.print("Traveler id: ");
-                        String travelerInput = sc.nextLine().trim();
-
-                        int trid;
-                        try {
-                            trid = Integer.parseInt(travelerInput);
-                        } catch (NumberFormatException e) {
-                            System.out.println("Invalid traveler id.");
-                            break;
-                        }
-                        */
+                        
                         System.out.print("Name: ");
                         String name = sc.nextLine().trim();
                         
@@ -192,7 +180,6 @@ public class Main {
                         }
 
                         // 5: book
-                        // Booking b = controller.book(tid, trid, tickets);
                         Booking b = controller.bookWithNewTraveler(tid, name, phone, email, tickets);
                         System.out.println("Booked: " + b);
 
