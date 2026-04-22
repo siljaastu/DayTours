@@ -88,8 +88,8 @@ INSERT OR IGNORE INTO Travelers VALUES(2,'Ken Kenson', '222-222', 'kenson@gmail.
 INSERT OR IGNORE INTO Travelers VALUES(3,'Lara Larson', '333-3333', 'lalak@gmail.com');
 INSERT OR IGNORE INTO Travelers VALUES(4,'Mads Madson', '444-4444', 'mass@gmail.com');
 
-
--- 3. FAVORITES TABLE
+/*
+-- 3. FAVORITES TABLE. Not implemented. Saved for future implementation.
 CREATE TABLE IF NOT EXISTS Favorites(
   travelerID char(4) REFERENCES Travelers(id),
   tourID TEXT REFERENCES Tours(id),
@@ -101,11 +101,11 @@ INSERT OR IGNORE INTO Favorites VALUES(1,'DT06');
 INSERT OR IGNORE INTO Favorites VALUES(2,'DT18');
 INSERT OR IGNORE INTO Favorites VALUES(2,'DT27');
 INSERT OR IGNORE INTO Favorites VALUES(3,'DT52');
-
+*/
 
 -- 4. BOOKINGS TABLE
 CREATE TABLE IF NOT EXISTS Bookings(
-  id INTEGER PRIMARY KEY AUTOINCREMENT, --bætti við autoincrement því þarf að vera unique
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   travelerId int REFERENCES Travelers(id),
   tourId char(4) REFERENCES Tours(id),
   nrTickets int,
