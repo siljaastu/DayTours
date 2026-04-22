@@ -23,13 +23,6 @@ public class Booking {
         this.tickets = tickets;
     }
 
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
 
     public String getTourId() {
         return tourId;
@@ -70,11 +63,13 @@ public class Booking {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
+    
+    /*
     // CANCEL BOOKING, not finished. We need to update seats.
     public void cancel() {
         this.status = "CANCELLED";
     }
+    */
 
     @Override
     public String toString() {
