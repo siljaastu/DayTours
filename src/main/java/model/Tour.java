@@ -8,7 +8,7 @@ import java.util.List;
  * Tour model.
  */
 public class Tour {
-    private String tourID; // er String í gagnabankanum.
+    private String tourID; 
     private String tourName;
     private String tourType;
     private Date date;
@@ -17,7 +17,7 @@ public class Tour {
     private int length;
     private int price;
     private List<String> highlights = new ArrayList<>();
-    private String imgUrl; // geri ráð fyrir einni mynd til að einfalda hlutina aðeins
+    private String imgUrl; 
     private List<String> reviews = new ArrayList<>();
     private int capacity;
     private int minNrTravelers;
@@ -25,7 +25,6 @@ public class Tour {
     private boolean isFull;
     private boolean isCancelled;
 
-    // not sure exactly what type of constructors we need so just put few for now
     public Tour() {
     }
 
@@ -69,9 +68,7 @@ public class Tour {
         this.startTime = startTime;
         this.length = length;
         this.price = price;
-        // geri ráð fyrir einni mynd núna
         this.imgUrl = imgUrl;
-        // Vantar highlights. Þurfum að pæla hvernig við útfærum það.
         this.capacity = capacity;
         this.minNrTravelers = minNrTravelers;
         this.nrTravelersBooked = nrTravelersBooked;
@@ -91,7 +88,7 @@ public class Tour {
         return t;
     }
 
-    // getters and setters - some probably redundant
+    // getters and setters 
     public String getTourID() {
         return tourID;
     }
@@ -156,9 +153,7 @@ public class Tour {
         this.price = price;
     }
 
-    // I can't remember exactly what the highlights should show so haven't
-    // done much with that. Here it's like tags, but maybe we just want to combine
-    // tourType and highlights in some way?
+    /*
     public List<String> getHighlights() {
         return highlights;
     }
@@ -166,6 +161,7 @@ public class Tour {
     public void setHighlights(List<String> highlights) {
         this.highlights = highlights;
     }
+    */
 
     public String getImgUrl() {
         return imgUrl;
@@ -175,7 +171,7 @@ public class Tour {
         this.imgUrl = imgUrls;
     }
 
-    // can't remember if we wanted to eliminate this?
+    /*
     public List<String> getReviews() {
         return reviews;
     }
@@ -183,6 +179,7 @@ public class Tour {
     public void setReviews(List<String> reviews) {
         this.reviews = reviews;
     }
+    */
 
     public int getCapacity() {
         return capacity;
@@ -192,7 +189,7 @@ public class Tour {
         this.capacity = capacity;
     }
 
-    // we could skip this, many companies do
+    /*
     public int getMinNrTravelers() {
         return minNrTravelers;
     }
@@ -200,7 +197,8 @@ public class Tour {
     public void setMinNrTravelers(int minNrTravelers) {
         this.minNrTravelers = minNrTravelers;
     }
-
+    */
+    
     public int getNrTravelersBooked() {
         return nrTravelersBooked;
     }
@@ -209,6 +207,7 @@ public class Tour {
         this.nrTravelersBooked = nrTravelersBooked;
     }
 
+    /*
     public boolean isCancelled() {
         return isCancelled;
     }
@@ -216,6 +215,7 @@ public class Tour {
     public void setIsCancelled(boolean cancelled) {
         this.isCancelled = cancelled;
     }
+    */
 
     public int getRemainingSeats() {
         return capacity - nrTravelersBooked;
@@ -229,11 +229,12 @@ public class Tour {
         isFull = full;
     }
 
-    // Maybe skip reviews?
+    /*
     public void addReview(String review) {
         if (review != null && !review.trim().isEmpty())
             reviews.add(review.trim());
     }
+    */
 
     public boolean validateAvailability(int tickets) {
         if (tickets <= 0)
